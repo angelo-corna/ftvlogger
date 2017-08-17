@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ftvbatch" default="jar" basedir=".">
+
+	<property name="project-name" value="ftvbatch" />
+	<property name="jar-file-name" value="${project-name}.jar" />
+	<property name="source-directory" value="src" />
+	<property name="classes-directory" value="classes" />
+	<property name="build-directory" value="bin" />
+	
+	<!--path id="classpath">
+		<fileset dir="${web-directory}/WEB-INF/lib" includes="**/*.jar"/>
+	</path-->
+
+    <target name="clean">
+        <delete dir="${build-directory}"/>
+        <delete dir="${classes-directory}"/>
+    </target>
+	
+	<target name="compile" depends="clean">
+        <mkdir dir="${classes-directory}"/>
+        <javac srcdir="${source-directory}" destdir="${classes-directory}"> 
+    		<!--classpath refid="classpath"/-->
+    	</javac>
+    </target>
+	
+	<target name="jar" depends="compile">
+		<mkdir dir="${build-directory}" />
+		<jar destfile="${build-directory}/${jar-file-name}" basedir="${classes-directory}">
+			<manifest>
+		    	<attribute name="Main-Class" value="ftvBatch.BuildHistoryData"/>
+				<attribute name="Class-Path" value=". ./mysql-connector-java-5.1.43-bin.jar"/>
+		    </manifest>
+		    <fileset dir="/Users/angelo/git/ftvlogger/ftvBatch/bin"/>
+			<zipfileset dir="/Users/angelo/git/ftvlogger/ftvBatch/lib" includes="mysql-connector-java-5.1.43-bin.jar"/>
+		</jar>
+	</target>
+
+</project>

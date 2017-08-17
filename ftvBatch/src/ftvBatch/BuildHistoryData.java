@@ -81,7 +81,6 @@ public class BuildHistoryData {
 	  	  	  			Float ftvDay = ftvMemo - ftv1st;
 	  	  	  			Float conDay = conMemo - con1st;
 	  	  	  			stmt1.execute("insert into henergy set date=date('"+String.valueOf(actDate)+"'), ftv_energy="+ftvDay+", con_energy="+conDay);
-	  	  	  			System.out.println(actDate+"-"+ftvDay+"-"+conDay);
 	  	  	  		}
 	  	  			actDate = date;
 	  	  	  		ftv1st = ftv;
