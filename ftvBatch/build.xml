@@ -30,8 +30,8 @@
 		    	<attribute name="Main-Class" value="ftvBatch.BuildHistoryData"/>
 				<attribute name="Class-Path" value=". ./mysql-connector-java-5.1.43-bin.jar"/>
 		    </manifest>
-		    <fileset dir="/Users/angelo/git/ftvlogger/ftvBatch/bin"/>
-			<zipfileset dir="/Users/angelo/git/ftvlogger/ftvBatch/lib" includes="mysql-connector-java-5.1.43-bin.jar"/>
+		    <fileset dir="bin"/>
+			<zipfileset dir="lib" includes="mysql-connector-java-5.1.43-bin.jar"/>
 		</jar>
 	</target>
 
