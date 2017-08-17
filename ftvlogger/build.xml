@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ftvlogger" default="war" basedir=".">
+
+	<property name="project-name" value="ftvlogger" />
+
+	<property name="war-file-name" value="${project-name}.war" />
+	<property name="source-directory" value="src" />
+	<property name="web-directory" value="WebContent" />
+	<property name="classes-directory" value="${web-directory}/WEB-INF/classes" />
+	<property name="web-xml-file" value="${web-directory}/WEB-INF/web.xml" />
+	<tstamp prefix="build-info">
+		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
+		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
+	</tstamp>
+	<property name="build-directory" value="bin" />
+	
+	<!--path id="classpath">
+		<fileset dir="${web-directory}/WEB-INF/lib" includes="**/*.jar"/>
+	</path-->
+
+    <target name="clean">
+        <delete dir="${build-directory}"/>
+        <delete dir="${classes-directory}"/>
+    </target>
+	
+	<target name="compile" depends="clean">
+        <mkdir dir="${classes-directory}"/>
+        <javac srcdir="${source-directory}" destdir="${classes-directory}"> 
+    		<!--classpath refid="classpath"/-->
+    	</javac>
+    </target>
+	
+	<target name="war" depends="compile">
+		<mkdir dir="${build-directory}" />
+		<!--delete file="${build-directory}/${war-file-name}" /-->
+		<war warfile="${build-directory}/${war-file-name}" webxml="${web-xml-file}" >
+			<!--classes dir="${classes-directory}" / -->
+			<!-- Include the JSP and images files -->
+		    <fileset dir="WebContent">
+		        <include name="**/*.jsp"/>
+		        <include name="**/*.png"/>
+		        <include name="**/*.jpg"/>
+		        <include name="**/*.html"/>
+		        <include name="style.css"/>
+		        <include name="**/config.properties"/>
+		    </fileset>
+			<webinf dir="WebContent/WEB-INF" includes="lib/*"/>
+			<webinf dir="WebContent/WEB-INF" includes="classes/**/*"/>
+			<metainf dir="WebContent/META-INF" includes="context.xml"/>
+			<manifest>
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Built-On" value="${build-info.current-date}" />
+				<attribute name="Built-At" value="${build-info.current-time}" />
+			</manifest>
+		</war>
+	</target>
+	
+</project>
