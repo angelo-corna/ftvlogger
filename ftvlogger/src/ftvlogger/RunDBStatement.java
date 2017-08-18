@@ -89,10 +89,12 @@ public class RunDBStatement {
         	String[] fields = rsRow.split(",");
         	if(kind.equals("date")){
     	    	sbOut.append(fields[position].substring(11, 16)+",");
+        	}else if(kind.equals("shortDate1")){
+    	    	sbOut.append(fields[position].substring(8, 10)+" "+getMonth(fields[position])+",");
         	}else{
-    	    	sbOut.append(fields[position]+",");
-        	}
-        }
+		    	sbOut.append(fields[position]+",");
+	        }
+		}
         return sbOut;
 	}
 	

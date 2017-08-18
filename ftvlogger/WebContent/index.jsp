@@ -32,42 +32,11 @@
 		StringBuilder sbConEnergyY = stm.getStringBuilder(rsY, 4, "measure");
 
     	//Get Last 10 Days Energy Data
-  		statement = "select date,ftv_energy,con_energy from rs485data where date > curdate()-10";
-  		List<String> rsL10 = stm.getResultSet("jdbc/ftvdb", statement);   
-  		List<String> dataL10 = new ArrayList<>(); 	  	  			
-  		String ftv1st = null;
-		String con1st = null;
-		String actDate = null;
-		String ftvMemo = null;
-		String conMemo = null;
-		
-  		for(String rowL10: rsL10){
-  	  		String[] fieldsL10 = rowL10.split(",");
-  	  		if(!fieldsL10[0].substring(0, 10).equals(actDate)){
-  	  	  		if(ftv1st != null){
-  	  	  			String ftvEnL10=String.valueOf(Float.parseFloat(ftvMemo) - Float.parseFloat(ftv1st));
-  	  	  			if(ftvEnL10.substring(ftvEnL10.length()-1,ftvEnL10.length()).equals("0")){
-  	  	  				ftvEnL10=ftvEnL10.substring(0,ftvEnL10.length()-2);	
-  	  	  			}
-  	  	  			String conEnL10=String.valueOf(Float.parseFloat(conMemo) - Float.parseFloat(con1st));
-  	  	  			if(conEnL10.substring(conEnL10.length()-1,conEnL10.length()).equals("0")){
-  	  	  				conEnL10=conEnL10.substring(0,conEnL10.length()-2);	
-  	  	  			}
-  	  	  			
-  	  	  			String monthString = stm.getMonth(actDate);
-
-  	  	  			dataL10.add(actDate.subSequence(8,10)+" "+monthString+","+ftvEnL10+","+conEnL10);	  
-  	  	  		}
-  	  			actDate = fieldsL10[0].substring(0, 10);
-  	  	  		ftv1st = fieldsL10[1];
-  	  	  		con1st = fieldsL10[2];
-  	  		}
-  	  		ftvMemo = fieldsL10[1];
-  	  		conMemo = fieldsL10[2];
-		}
-		StringBuilder sbL10Day = stm.getStringBuilder(dataL10, 0, "measure");
-		StringBuilder sbL10FtvEn = stm.getStringBuilder(dataL10, 1, "measure");
-		StringBuilder sbL10ConEn = stm.getStringBuilder(dataL10, 2, "measure");
+  		statement = "select date,ftv_energy,con_energy from henergy where date > curdate()-11";
+  		List<String> rsL10 = stm.getResultSet("jdbc/ftvdb", statement); 
+		StringBuilder sbL10Day = stm.getStringBuilder(rsL10, 0, "shortDate1");
+		StringBuilder sbL10FtvEn = stm.getStringBuilder(rsL10, 1, "measure");
+		StringBuilder sbL10ConEn = stm.getStringBuilder(rsL10, 2, "measure");
  
 	%>
 
