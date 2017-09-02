@@ -23,7 +23,7 @@
 		StringBuilder sbConEnergy = stm.getStringBuilder(rs, 4, "measure");
 	  	
     	//Get Yesterday Power Data
-  		statement = "select date,ftv_power,ftv_energy,con_power,con_energy from rs485data where date > curdate()-1 and date < curdate()";
+  		statement = "select date,ftv_power,ftv_energy,con_power,con_energy from rs485data where date > subdate(curdate(),1) and date < curdate()";
   		List<String> rsY = stm.getResultSet("jdbc/ftvdb", statement);    
 		StringBuilder sbDateY = stm.getStringBuilder(rsY, 0, "date");
 		StringBuilder sbFtvPowerY = stm.getStringBuilder(rsY, 1, "measure");
@@ -32,7 +32,7 @@
 		StringBuilder sbConEnergyY = stm.getStringBuilder(rsY, 4, "measure");
 
     	//Get Last 10 Days Energy Data
-  		statement = "select date,ftv_energy,con_energy from henergy where date > curdate()-11";
+  		statement = "select date,ftv_energy,con_energy from henergy where date > subdate(curdate(),11)";
   		List<String> rsL10 = stm.getResultSet("jdbc/ftvdb", statement); 
 		StringBuilder sbL10Day = stm.getStringBuilder(rsL10, 0, "shortDate1");
 		StringBuilder sbL10FtvEn = stm.getStringBuilder(rsL10, 1, "measure");
