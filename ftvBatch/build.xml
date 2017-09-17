@@ -28,10 +28,10 @@
 		<jar destfile="${build-directory}/${jar-file-name}" basedir="${classes-directory}">
 			<manifest>
 		    	<!-- attribute name="Main-Class" value="ftvBatch.BuildHistoryData"/ -->
-				<attribute name="Class-Path" value=". ./mysql-connector-java-5.1.43-bin.jar"/>
+				<!-- attribute name="Class-Path" value=". ./mysql-connector-java-5.1.43-bin.jar"/ -->
 		    </manifest>
 		    <!--fileset dir="bin"/-->
-			<zipfileset dir="lib" includes="*.jar"/>
+			<!-- zipfileset dir="lib" includes="*.jar"/ -->
 		</jar>
 	</target>
 
