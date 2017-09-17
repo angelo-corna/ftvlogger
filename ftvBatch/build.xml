@@ -7,9 +7,9 @@
 	<property name="classes-directory" value="classes" />
 	<property name="build-directory" value="bin" />
 	
-	<!--path id="classpath">
-		<fileset dir="${web-directory}/WEB-INF/lib" includes="**/*.jar"/>
-	</path-->
+	<path id="classpath">
+		<fileset dir="lib" includes="**/*.jar"/>
+	</path>
 
     <target name="clean">
         <delete dir="${build-directory}"/>
@@ -19,7 +19,7 @@
 	<target name="compile" depends="clean">
         <mkdir dir="${classes-directory}"/>
         <javac srcdir="${source-directory}" destdir="${classes-directory}"> 
-    		<!--classpath refid="classpath"/-->
+    		<classpath refid="classpath"/>
     	</javac>
     </target>
 	
