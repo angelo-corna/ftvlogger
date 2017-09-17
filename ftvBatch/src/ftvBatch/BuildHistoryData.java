@@ -12,8 +12,8 @@ import javax.crypto.Cipher;
 
 public class BuildHistoryData {
 
-    static Cipher cipher;  
-
+    static Cipher cipher;
+	
     public static void main(String[] args) throws Exception {
 		
 		String cfgFile = args[0];
@@ -24,8 +24,8 @@ public class BuildHistoryData {
 		input = new FileInputStream(cfgFile);
 		prop.load(input);
 		String db_url = prop.getProperty("db_url");
-		String user = prop.getProperty("user");
-		String encryptedPwd = prop.getProperty("password");
+		String user = prop.getProperty("db_user");
+		String encryptedPwd = prop.getProperty("db_password");
 		String keyS = prop.getProperty("key");
 
         String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);

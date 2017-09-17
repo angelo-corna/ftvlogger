@@ -20,11 +20,11 @@ public class SendMail {
 		InputStream input = null;
 		input = new FileInputStream(cfgFile);
 		prop.load(input);
-		String host = prop.getProperty("host");
-		String user = prop.getProperty("user");
-		String encryptedPwd = prop.getProperty("password");
+		String host = prop.getProperty("mail_host");
+		String user = prop.getProperty("mail_user");
+		String encryptedPwd = prop.getProperty("mail_password");
+		String port = prop.getProperty("mail_port");
 		String keyS = prop.getProperty("key");
-		String port = prop.getProperty("port");
 
         String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
 		 

@@ -15,17 +15,16 @@ import java.util.Properties;
 public class CheckFTV {
 	 public static void main(String[] args) throws Exception {  
 		 
-		 String cfgFiledb = args[0];
-		 String cfgFilemail = args[1];
+		 String cfgFile = args[0];
 		 
 		// get db configuration
 		Properties prop = new Properties();
 		InputStream input = null;
-		input = new FileInputStream(cfgFiledb);
+		input = new FileInputStream(cfgFile);
 		prop.load(input);
 		String db_url = prop.getProperty("db_url");
-		String user = prop.getProperty("user");
-		String encryptedPwd = prop.getProperty("password");
+		String user = prop.getProperty("db_user");
+		String encryptedPwd = prop.getProperty("db_password");
 		String keyS = prop.getProperty("key");
         String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
 		 
@@ -51,17 +50,17 @@ public class CheckFTV {
 		    Date dLastDate = fmtLastDate.parse(lastDate);
 		    
 		    Date actualDate = new Date();
-		    
+
 		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
-				sendMail(cfgFilemail, "Last insert date: "+lastDate, "FTV Logger - Data Collection Error");
+		    	sendMail(cfgFile, "Last insert date: "+lastDate, "FTV Logger - Data Collection Error");
 		    }
 		}catch(SQLException se){
 			//Handle errors for JDBC
-			sendMail(cfgFilemail, se.toString(), "FTV Logger - Error detected during SQL Statement submission");
+			sendMail(cfgFile, se.toString(), "FTV Logger - Error detected during SQL Statement submission");
 			//se.printStackTrace();
 		}catch(Exception e){
 			//Handle errors for Class.forName
-			sendMail(cfgFilemail, e.toString(), "FTV Logger - Error detected during check execution");
+			sendMail(cfgFile, e.toString(), "FTV Logger - Error detected during check execution");
 		    //e.printStackTrace();
 		}finally{
 			//finally block used to close resources
@@ -79,9 +78,9 @@ public class CheckFTV {
 		}
 	 }
 	 
-	private static void sendMail(String cfgFilemail, String mailBody, String subject ) throws Exception{
+	private static void sendMail(String cfgFile, String mailBody, String subject ) throws Exception{
 		 ArrayList<String> toList = new ArrayList<String>();
 		 toList.add("cornangelo@gmail.com");
-		 SendMail.sendMailWithAuth(cfgFilemail, toList, mailBody, subject);
+		 SendMail.sendMailWithAuth(cfgFile, toList, mailBody, subject);
 	}
 }
