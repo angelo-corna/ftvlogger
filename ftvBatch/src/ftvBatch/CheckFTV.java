@@ -44,7 +44,7 @@ public class CheckFTV {
 		    stmt.close();
 		    conn.close();
 		    
-		    //String lastDate = "2017-09-17 10:31:30";
+		    System.out.println("\tLast insert date: "+lastDate);
 		    SimpleDateFormat fmtLastDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		    fmtLastDate.setLenient(false);
 		    Date dLastDate = fmtLastDate.parse(lastDate);
