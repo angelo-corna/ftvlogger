@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;  
 
-public class checkFtv {
+public class CheckFTV {
 	 public static void main(String[] args) throws Exception {  
 		 
 		 String cfgFiledb = args[0];
@@ -27,7 +27,7 @@ public class checkFtv {
 		String user = prop.getProperty("user");
 		String encryptedPwd = prop.getProperty("password");
 		String keyS = prop.getProperty("key");
-        String decryptedPwd =  decryptPwd.getDecryptedPwd(encryptedPwd, keyS);
+        String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
 		 
         
 		//check last data
@@ -82,6 +82,6 @@ public class checkFtv {
 	private static void sendMail(String cfgFilemail, String mailBody, String subject ) throws Exception{
 		 ArrayList<String> toList = new ArrayList<String>();
 		 toList.add("cornangelo@gmail.com");
-		 sendMail.sendMailWithAuth(cfgFilemail, toList, mailBody, subject);
+		 SendMail.sendMailWithAuth(cfgFilemail, toList, mailBody, subject);
 	}
 }

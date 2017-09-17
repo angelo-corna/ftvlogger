@@ -12,7 +12,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public class decryptPwd{
+public class DecryptPwd{
 
     static Cipher cipher;  
 

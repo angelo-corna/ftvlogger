@@ -28,7 +28,7 @@ public class BuildHistoryData {
 		String encryptedPwd = prop.getProperty("password");
 		String keyS = prop.getProperty("key");
 
-        String decryptedPwd =  decryptPwd.getDecryptedPwd(encryptedPwd, keyS);
+        String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
         
 		//create energy data
         Connection conn = null;

@@ -12,7 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;  
 
 
-public class sendMail {
+public class SendMail {
 	 public static void sendMailWithAuth(String cfgFile, List<String> toList, String htmlBody, String subject) throws Exception {
 
 		// get mail configuration
@@ -26,7 +26,7 @@ public class sendMail {
 		String keyS = prop.getProperty("key");
 		String port = prop.getProperty("port");
 
-        String decryptedPwd =  decryptPwd.getDecryptedPwd(encryptedPwd, keyS);
+        String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
 		 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.user",user); 
