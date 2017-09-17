@@ -51,7 +51,8 @@ public class CheckFTV {
 		    
 		    Date actualDate = new Date();
 
-		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
+//		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
+		    if((actualDate.getTime() - dLastDate.getTime()) > 1){
 		    	sendMail(cfgFile, "Last insert date: "+lastDate, "FTV Logger - Data Collection Error");
 		    }
 		}catch(SQLException se){
