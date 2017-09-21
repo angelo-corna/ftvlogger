@@ -2,7 +2,6 @@ package ftvBatch;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -13,8 +12,22 @@ import javax.mail.internet.MimeMessage;
 
 
 public class SendMail {
-	 public static void sendMailWithAuth(String cfgFile, List<String> toList, String htmlBody, String subject) throws Exception {
-
+	
+	 public static void main(String[] args) throws Exception {  
+ 
+//	 public static void main(String cfgFile, List<String> toList, String htmlBody, String subject) throws Exception {
+		 
+		//get argumrnts
+		if (args.length != 4){
+			System.out.println("usage Send Mail cfgFile to htmlBody subject");
+			System.exit(1);
+		}
+		 
+		String cfgFile = args[0];
+		String to = args[1];
+		String htmlBody = args[2];
+		String subject = args[3];
+		 
 		// get mail configuration
 		Properties prop = new Properties();
 		InputStream input = null;
@@ -44,10 +57,7 @@ public class SendMail {
 	    MimeMessage message = new MimeMessage(session);
 	    message.setFrom(new InternetAddress(user));
 
-	    // To get the array of addresses
-	    for (String to: toList) {
-	        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-	    }
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 	    message.setSubject(subject);
 	    message.setContent(htmlBody, "text/html");

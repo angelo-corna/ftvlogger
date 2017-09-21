@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;  
 
@@ -51,16 +50,20 @@ public class CheckFTV {
 		    
 		    Date actualDate = new Date();
 
-		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
-		    	sendMail(cfgFile, "Last insert date: "+lastDate, "FTV Logger - Data Collection Error");
+//		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
+		    if((actualDate.getTime() - dLastDate.getTime()) > 1){
+		    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", "Last insert date: "+lastDate, "FTV Logger - Data Collection Error"};
+		    	SendMail.main(mailArgs);;
 		    }
 		}catch(SQLException se){
 			//Handle errors for JDBC
-			sendMail(cfgFile, se.toString(), "FTV Logger - Error detected during SQL Statement submission");
+	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", se.toString(), "FTV Logger - Error detected during SQL Statement submission"};
+	    	SendMail.main(mailArgs);
 			//se.printStackTrace();
 		}catch(Exception e){
 			//Handle errors for Class.forName
-			sendMail(cfgFile, e.toString(), "FTV Logger - Error detected during check execution");
+	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", e.toString(), "FTV Logger - Error detected during check execution"};
+	    	SendMail.main(mailArgs);
 		    //e.printStackTrace();
 		}finally{
 			//finally block used to close resources
@@ -77,10 +80,4 @@ public class CheckFTV {
 		    }//end finally try
 		}
 	 }
-	 
-	private static void sendMail(String cfgFile, String mailBody, String subject ) throws Exception{
-		 ArrayList<String> toList = new ArrayList<String>();
-		 toList.add("cornangelo@gmail.com");
-		 SendMail.sendMailWithAuth(cfgFile, toList, mailBody, subject);
-	}
 }
