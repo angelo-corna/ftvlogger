@@ -154,7 +154,7 @@
             }
  
             // Set today chart options
-            var optionsToday = {'title':'Today ( '+ftvEnergyToday+' KWh produced - '+conEnergyToday+' KWh consumed )',
+            var optionsToday = {'title':'Today ( '+ftvEnergyToday.toFixed(2)+' KWh produced - '+conEnergyToday.toFixed(2)+' KWh consumed )',
 	           	'width':1000,
                	'height':290,
               	'hAxis': {showTextEvery: parseInt(dataToday.getNumberOfRows() / 11)},
@@ -165,7 +165,7 @@
             };
             
             // Set yesterday chart options
-            var optionsYesterday = {'title':'Yesterday ( '+ftvEnergyYesterday+' KWh produced - '+conEnergyYesterday+' KWh consumed )',
+            var optionsYesterday = {'title':'Yesterday ( '+ftvEnergyYesterday.toFixed(2)+' KWh produced - '+conEnergyYesterday.toFixed(2)+' KWh consumed )',
 	           	'width':680,
                	'height':200,
               	'hAxis': {showTextEvery: parseInt(dataYesterday.getNumberOfRows() / 11)},
