@@ -7,6 +7,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Properties;  
 
 public class CheckNULLs {
@@ -39,14 +43,18 @@ public class CheckNULLs {
 		    ResultSet rs = stmt.executeQuery("select DATE(date) mydate, count(date) '#NULLs' from rs485data where date > subdate(curdate(),1) AND date < curdate() AND (ftv_voltage is NULL or ftv_current is NULL or ftv_power is NULL or ftv_frequency is NULL or ftv_energy is NULL) group by mydate;");
 		    if (rs.next() ) {
 			    int numNulls  = rs.getInt("#NULLs"); 
-			    System.out.println("\tFTV #NULLs: "+numNulls);
+		    	String chkDate  = rs.getString("mydate"); 
+			    System.out.println("\t"+chkDate+" - FTV #NULLs: "+numNulls);
 			    if(numNulls > threashold){
-			    	String chkDate  = rs.getString("mydate"); 
 			    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - FTV #NULLs Threashold Excideed"};
 			    	SendMail.main(mailArgs);;
 			    }
 		    }else{
-			    System.out.println("\tFTV #NULLs: 0");
+		    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        Calendar calendar = Calendar.getInstance();
+		        calendar.add(Calendar.DATE, -1);
+		        Date yesterday = calendar.getTime();
+			    System.out.println("\t"+dateFormat.format(yesterday)+" - FTV #NULLs: 0");
 		    }
 		    rs.close();
 
@@ -54,14 +62,18 @@ public class CheckNULLs {
 		    rs = stmt.executeQuery("select DATE(date) mydate, count(date) '#NULLs' from rs485data where date > subdate(curdate(),1) AND date < curdate() AND (con_voltage is NULL or con_current is NULL or con_power is NULL or con_frequency is NULL or con_energy is NULL) group by mydate;");
 		    if (rs.next() ) {
 			    int numNulls  = rs.getInt("#NULLs"); 
-			    System.out.println("\tCON #NULLs: "+numNulls);
+		    	String chkDate  = rs.getString("mydate"); 
+			    System.out.println("\t"+chkDate+" - CON #NULLs: "+numNulls);
 			    if(numNulls > threashold){
-			    	String chkDate  = rs.getString("mydate"); 
 			    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - CON #NULLs Threashold Excideed"};
 			    	SendMail.main(mailArgs);;
 			    }
 		    }else{
-			    System.out.println("\tCON #NULLs: 0");
+		    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        Calendar calendar = Calendar.getInstance();
+		        calendar.add(Calendar.DATE, -1);
+		        Date yesterday = calendar.getTime();
+			    System.out.println("\t"+dateFormat.format(yesterday)+" - CON #NULLs: 0");
 		    }
 		    rs.close();
 		    stmt.close();
