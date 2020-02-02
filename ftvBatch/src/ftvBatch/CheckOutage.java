@@ -1,23 +1,33 @@
 package ftvBatch;
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.crypto.Cipher;
 
-public class BuildHistoryData {
+public class CheckOutage {
 
     static Cipher cipher;
 	
     public static void main(String[] args) throws Exception {
 		
 		String cfgFile = args[0];
+		String numLecturesString = args[1];
+		String thresholdString = args[2];
 
+		int numLectures = Integer.parseInt(numLecturesString);
+		int threshold = Integer.parseInt(thresholdString);
+		
 		// get db configuration
 		Properties prop = new Properties();
 		InputStream input = null;
@@ -27,53 +37,29 @@ public class BuildHistoryData {
 		String user = prop.getProperty("db_user");
 		String encryptedPwd = prop.getProperty("db_password");
 		String keyS = prop.getProperty("key");
+		String telegramTokenValue = prop.getProperty("telegramTokenValue");
+		String telegramChatId = prop.getProperty("telegramChatId");
 
         String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
-        
+
+	    ArrayList<Float> lectures = new ArrayList<Float>();
+
 		//create energy data
         Connection conn = null;
 		Statement stmt = null;
-		Statement stmt1 = null;
+	
 		try{
 		    Class.forName("com.mysql.jdbc.Driver");
 		    conn = DriverManager.getConnection(db_url,user,decryptedPwd);
 		    stmt = conn.createStatement();
-		    stmt1 = conn.createStatement();
-
-		    //clear energy table
-		    stmt.execute("truncate table henergy");
 		    
 		    //get data
-		    ResultSet rs = stmt.executeQuery("select date,ftv_energy,con_energy from rs485data");
-		    
-	  		Float ftv1st = (float) 0;
-			Float con1st = (float) 0;
-			String actDate = null;
-			Float ftvMemo = (float) 0;
-			Float conMemo = (float) 0;
-
+		    ResultSet rs = stmt.executeQuery("select con_power from rs485data order by date desc limit " + numLectures);
 		    while(rs.next()){
-		    	//Retrieve by column name
-		        String date  = rs.getString("date").substring(0, 10);
-		        Float ftv = rs.getFloat("ftv_energy");
-		        Float con = rs.getFloat("con_energy");
-		        
-	  	  		if(!date.equals(actDate)){
-	  	  	  		if(ftv1st != 0){
-	  	  	  			Float ftvDay = ftvMemo - ftv1st;
-	  	  	  			Float conDay = conMemo - con1st;
-	  	  	  			stmt1.execute("insert into henergy set date=date('"+String.valueOf(actDate)+"'), ftv_energy="+ftvDay+", con_energy="+conDay);
-	  	  	  		}
-	  	  			actDate = date;
-	  	  	  		ftv1st = ftv;
-	  	  	  		con1st = con;
-	  	  		}
-	  	  		ftvMemo = ftv;
-	  	  		conMemo = con;
+		    	//Retrieve data
+		    	lectures.add(rs.getFloat("con_power"));
 		    }
-		    
 		    stmt.close();
-		    stmt1.close();
 
 		    conn.close();
 		}catch(SQLException se){
@@ -95,6 +81,32 @@ public class BuildHistoryData {
 		    }catch(SQLException se){
 		    	se.printStackTrace();
 		    }//end finally try
+		}
+		
+		boolean sendAlert = true;
+		for(int i = 0 ; i < numLectures ; i++) {
+			if(lectures.get(i) < threshold) {
+				sendAlert = false;
+			}
+		}
+		if(sendAlert) {
+	    	String urlString = "https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s";
+
+	    	String text = "Attenzione. Il consumo di energia elettrica è oltre la soglia consentita. Valori rilevati: ";
+			for(int i = 0 ; i < numLectures ; i++) {
+				text=text + lectures.get(i) + ", ";
+			}
+			
+			String textFinal = text.substring(0, text.length() -2);
+	    	urlString = String.format(urlString, telegramTokenValue, telegramChatId, textFinal);
+
+	        try {
+	            URL url = new URL(urlString);
+	            URLConnection connWEB = url.openConnection();
+	            InputStream is = new BufferedInputStream(connWEB.getInputStream());
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		}
 	}
 }
