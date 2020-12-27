@@ -249,7 +249,7 @@
     			<td>
     				<table>
     					<tr>
-    						<td><b>&nbsp;&nbsp;Last Power Rating Detected @<script type="text/javascript">document.write(lastdate);</script> (W)</b></td>
+    						<td><b>&nbsp;&nbsp;Power Rating Detected @<script type="text/javascript">document.write(lastdate);</script> (W)</b></td>
     					</tr>
     					<tr>
     						<td><div id="chartInst"></div></td>
