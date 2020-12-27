@@ -60,7 +60,7 @@ public class BuildHistoryData {
 		    //get data
 			for (String y : years) {
 
-				System.out.println("Get " + y + " data");
+				System.out.println("\tGet " + y + " data");
 				
 				ResultSet rs = stmt.executeQuery("select date,ftv_energy,con_energy from rs485data where year(date)='"+y+"'");
 			    while(rs.next()){
@@ -82,11 +82,10 @@ public class BuildHistoryData {
 		  	  		ftvMemo = ftv;
 		  	  		conMemo = con;
 			    }
-			    
-			    stmt.close();
-			    stmt1.close();
 			}
 
+		    stmt.close();
+		    stmt1.close();
 		    conn.close();
 		}catch(SQLException se){
 			//Handle errors for JDBC
