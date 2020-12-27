@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.crypto.Cipher;
@@ -43,37 +44,48 @@ public class BuildHistoryData {
 		    //clear energy table
 		    stmt.execute("truncate table henergy");
 		    
-		    //get data
-		    ResultSet rs = stmt.executeQuery("select date,ftv_energy,con_energy from rs485data");
+		    //get years
+		    ArrayList<String> years = new ArrayList<String>();
+		    ResultSet rsy = stmt.executeQuery("select distinct year(date) as year from rs485data");
+		    while(rsy.next()){
+		    	years.add(rsy.getString("year"));
+		    }
 		    
-	  		Float ftv1st = (float) 0;
+		    Float ftv1st = (float) 0;
 			Float con1st = (float) 0;
 			String actDate = null;
 			Float ftvMemo = (float) 0;
 			Float conMemo = (float) 0;
+			
+		    //get data
+			for (String y : years) {
 
-		    while(rs.next()){
-		    	//Retrieve by column name
-		        String date  = rs.getString("date").substring(0, 10);
-		        Float ftv = rs.getFloat("ftv_energy");
-		        Float con = rs.getFloat("con_energy");
-		        
-	  	  		if(!date.equals(actDate)){
-	  	  	  		if(ftv1st != 0){
-	  	  	  			Float ftvDay = ftvMemo - ftv1st;
-	  	  	  			Float conDay = conMemo - con1st;
-	  	  	  			stmt1.execute("insert into henergy set date=date('"+String.valueOf(actDate)+"'), ftv_energy="+ftvDay+", con_energy="+conDay);
-	  	  	  		}
-	  	  			actDate = date;
-	  	  	  		ftv1st = ftv;
-	  	  	  		con1st = con;
-	  	  		}
-	  	  		ftvMemo = ftv;
-	  	  		conMemo = con;
-		    }
-		    
-		    stmt.close();
-		    stmt1.close();
+				System.out.println("Get " + y + " data");
+				
+				ResultSet rs = stmt.executeQuery("select date,ftv_energy,con_energy from rs485data where year(date)='"+y+"'");
+			    while(rs.next()){
+			    	//Retrieve by column name
+			        String date  = rs.getString("date").substring(0, 10);
+			        Float ftv = rs.getFloat("ftv_energy");
+			        Float con = rs.getFloat("con_energy");
+			        
+		  	  		if(!date.equals(actDate)){
+		  	  	  		if(ftv1st != 0){
+		  	  	  			Float ftvDay = ftvMemo - ftv1st;
+		  	  	  			Float conDay = conMemo - con1st;
+		  	  	  			stmt1.execute("insert into henergy set date=date('"+String.valueOf(actDate)+"'), ftv_energy="+ftvDay+", con_energy="+conDay);
+		  	  	  		}
+		  	  			actDate = date;
+		  	  	  		ftv1st = ftv;
+		  	  	  		con1st = con;
+		  	  		}
+		  	  		ftvMemo = ftv;
+		  	  		conMemo = con;
+			    }
+			    
+			    stmt.close();
+			    stmt1.close();
+			}
 
 		    conn.close();
 		}catch(SQLException se){
