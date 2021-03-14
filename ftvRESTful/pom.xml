@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.software.trentanove.ftvRESTful</groupId>
   	<artifactId>ftvRESTful</artifactId>
-  	<version>1.0.1.1</version>
+  	<version>1.0.1.2</version>
   	<packaging>war</packaging>
 	
 	<dependencies>
@@ -51,6 +51,16 @@
 				      <failOnMissingWebXml>false</failOnMissingWebXml>
 			    	</configuration>
 			    </plugin>
+			    
+			    <plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<configuration>
+						<url>http://${hostname}:${port}/manager/text</url>
+						<server>${serverName}</server>
+						<path>/ftvRESTful</path>
+					</configuration>
+				</plugin>  		
 			</plugins>
 	 	</pluginManagement>
 	 </build>
