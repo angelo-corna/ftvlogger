@@ -14,7 +14,7 @@ pipeline {
         stage('Deploy to Tomcat'){
 			steps{
             	dir("ftvRESTful"){
-	            	sh '${mvn} tomcat7:redeploy -Dhostname=ftvlogger -Dport=8080 -DserverName=ftvTomcatServer'   
+	            	sh '${mvn} tomcat8:redeploy -Dhostname=ftvlogger -Dport=8080 -DserverName=ftvTomcatServer'   
 	            } 
 			}
         }

@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.software.trentanove.ftvRESTful</groupId>
   	<artifactId>ftvRESTful</artifactId>
-  	<version>0.0.2-SNAPSHOT</version>
+  	<version>1.0.1</version>
   	<packaging>war</packaging>
 	
 	<dependencies>
