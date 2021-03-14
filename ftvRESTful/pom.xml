@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.software.trentanove.ftvRESTful</groupId>
   	<artifactId>ftvRESTful</artifactId>
-  	<version>1.0.1</version>
+  	<version>1.0.1.1</version>
   	<packaging>war</packaging>
 	
 	<dependencies>
@@ -31,6 +31,11 @@
 		   <groupId>org.springframework</groupId>
 		   <artifactId>spring-jdbc</artifactId>
 		   <version>5.3.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jasper</artifactId>
+		    <version>9.0.12</version>
 		</dependency>
 	</dependencies>
 	
