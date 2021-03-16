@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ftvloggerREST</groupId>
   <artifactId>ftvloggerREST</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.0.1</version>
   <packaging>war</packaging>
   
   	<dependencies>
