@@ -31,6 +31,18 @@
           <warSourceDirectory>WebContent</warSourceDirectory>
         </configuration>
       </plugin>
+      
+	  <plugin>
+	  	<groupId>org.apache.tomcat.maven</groupId>
+		<artifactId>tomcat7-maven-plugin</artifactId>
+		<configuration>
+		<url>http://${hostname}:${port}/manager/text</url>
+		<server>${serverName}</server>
+		<path>/ftvloggerREST</path>
+		</configuration>
+	 </plugin>  		
+
+      
     </plugins>
   </build>
 </project>
