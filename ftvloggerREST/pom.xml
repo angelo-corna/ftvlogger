@@ -4,6 +4,15 @@
   <artifactId>ftvloggerREST</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
+  
+  	<dependencies>
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-jasper</artifactId>
+		    <version>9.0.12</version>
+		</dependency>
+	</dependencies>
+  
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
