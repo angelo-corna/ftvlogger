@@ -50,7 +50,7 @@ public class FtvDataController {
 		return new ResponseEntity<Void>(headers, HttpStatus.NO_CONTENT);
 	}
 	*/
-	
+
 	@RequestMapping(value="/getLastFtvData", method = RequestMethod.GET, headers="Accept=application/json")
 	public ResponseEntity<FtvData> getLastFtvData(){
 		FtvData last = ftvDataService.getLastFtvData();
