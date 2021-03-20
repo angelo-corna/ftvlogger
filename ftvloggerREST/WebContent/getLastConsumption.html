@@ -3,16 +3,114 @@
     <head>
     	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 		<meta content="utf-8" http-equiv="encoding">
-    	
-        <title>Hello jQuery</title>
+		
+		<title>Dati Ultima Lettura</title>
+		<link rel="stylesheet" href="css/styles.css" type="text/css">
+		<link rel="icon" type="image/png" href="images/list.png">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="js/getLastConsumption.js"></script>
+        
+        <script>
+        function UserAction() {
+            var xhttp = new XMLHttpRequest();
+         	xhttp.onreadystatechange = function() {
+            	if (this.readyState == 4 && this.status == 200) {
+                	myObj = JSON.parse(this.responseText);
+                	var consumo = Math.round(myObj.con_power);
+
+                	var barBgCellColor = "green";
+                	if (consumo > 1000 && consumo <= 2000){
+                		barBgCellColor = "yellow";
+                	}
+                	if (consumo > 2000){
+                		barBgCellColor = "red";
+                	}
+                	
+                	var barNums = (Math.floor(myObj.con_power/200) + 1) * 2;
+                	                	
+                	var defaultBgCellColor = "#323228";
+                	var EmptyBgCellColor = "#5A5A5A"
+                	var tagBgCellColor = "orange"
+                	
+                	var mytable = '<table style="width:100%" style = "text-align: center;">';
+                	mytable += '<tr><td align="center" colspan="4"><H1O>&nbsp;</H1O></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H1W>Consumo Attuale</H1W></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H1O>&nbsp;</H1O></td></tr>';
+                	 
+                	var i = 0;
+
+                	for ( i= 0; i < 40; i++) { 
+                		if ( 40 - i <= barNums){
+                			bgCellColor = barBgCellColor;
+                		}else{
+                    		bgCellColor = EmptyBgCellColor;
+                		}	
+                		cellHeight = "25px"
+                		if (i%2 == 0){
+                			bgCellColor = defaultBgCellColor;
+                			cellHeight = "2px"
+                		}
+                		
+                		var tagValue = "";
+                		var rowValue = "";
+                		switch (i) {
+	                		case 10:
+	                		    tagValue = "3000";
+	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
+	                		    break;
+	                		case 20:
+	                		    tagValue = "2000";
+	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
+	                		    break;
+	                		case 30:
+	                		    tagValue = "1000";
+	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
+	                		    break;
+	                		  default:
+	                		    tagValue = "";
+	                		  	var rowValue = "";
+                		}
+                		
+                		mytable += '<tr>';
+                		mytable += '<td style="width:10%; text-align:center; height:' + cellHeight + '; color:' + EmptyBgCellColor+'; background-color:' + defaultBgCellColor + '">&nbsp;</td>';
+                		mytable += '<td style="width:30%; text-align:center; height:' + cellHeight + '; color:' + tagBgCellColor+'; background-color:' + bgCellColor + '">' + rowValue + '</td>';
+                		mytable += '<td style="width:10%; text-align:center; height:' + cellHeight + '; color:' + tagBgCellColor+'; background-color:' + defaultBgCellColor + '">' + tagValue + '</td>';
+                		if(i == 0){
+                    		mytable += '<td rowspan="40" style="width:50%; text-align:center; vertical-align:center; height:' + cellHeight + '; color:orange; background-color:' + defaultBgCellColor + ' font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 80px;">' + consumo + ' W</td>';
+                    		
+                		}
+                		/*
+                   		if(i == 21){
+                    		mytable += '<td rowspan="20" style="width:50%; text-align:center; vertical-align:top; height:' + cellHeight + '; color:white; background-color:' + defaultBgCellColor + ' font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 80px;">KWH</td>';
+                    		
+                		}
+                		*/
+                		mytable += '</tr>';
+                	}
+                	 
+                	 
+                	 mytable += '</table>';
+                    	                	 
+                	 document.getElementById("demo").innerHTML = mytable;
+                    // alert(this.responseText);
+                 }
+            };
+            xhttp.open("GET", "https://192.168.1.12:8443/ftvRESTful/getLastFtvData", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+            xhttp.send();
+        }
+        </script>
+        
     </head>
 
     <body>
-        <div>
-            <p class="greeting-id">The ID is </p>
-            <p class="greeting-content">The content is </p>
-        </div>
+
+		<p id="demo"></p>
+		
+	<script>
+	UserAction()
+	</script>
+
     </body>
 </html>
