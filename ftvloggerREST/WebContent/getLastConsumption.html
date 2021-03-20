@@ -17,7 +17,34 @@
             	if (this.readyState == 4 && this.status == 200) {
                 	myObj = JSON.parse(this.responseText);
                 	var consumo = Math.round(myObj.con_power);
+                	var epochDate = Math.round(myObj.date);
+                	
+                	var readDate = new Date(epochDate);
+                	
+                	var year = readDate.getYear() + 1900;
+                	var month = readDate.getMonth() + 1 ;
+                	if (month < 10){
+                		month = "0" + month;
+                	}
+                	var day = readDate.getDate();
+                	if (day < 10){
+                		day = "0" + day;
+                	}
+                	var hour = readDate.getHours();
+                	if (hour < 10){
+                		hour = "0" + hour;
+                	}
+                	var minute = readDate.getMinutes();
+                	if (minute < 10){
+                		minute = "0" + minute;
+                	}
+                	var second = readDate.getSeconds();
+                	if (second < 10){
+                		second = "0" + second;
+                	}
 
+                	readDateString = day + "-" + month + "-" + year + " " + hour + ":" + minute+ ":" + second;
+                	
                 	var barBgCellColor = "green";
                 	if (consumo > 1000 && consumo <= 2000){
                 		barBgCellColor = "yellow";
@@ -33,9 +60,10 @@
                 	var tagBgCellColor = "orange"
                 	
                 	var mytable = '<table style="width:100%" style = "text-align: center;">';
-                	mytable += '<tr><td align="center" colspan="4"><H1O>&nbsp;</H1O></td></tr>';
-                	mytable += '<tr><td align="center" colspan="4"><H1W>Consumo Attuale</H1W></td></tr>';
-                	mytable += '<tr><td align="center" colspan="4"><H1O>&nbsp;</H1O></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H3W>&nbsp;</H3W></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H1O>Consumo Attuale</H1O></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H4O>' + readDateString + '</H4O></td></tr>';
+                	mytable += '<tr><td align="center" colspan="4"><H3W>&nbsp;</H3W></td></tr>';
                 	 
                 	var i = 0;
 
@@ -56,14 +84,17 @@
                 		switch (i) {
 	                		case 10:
 	                		    tagValue = "3000";
+	                		    tagBgCellColor = "red"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
-	                		    break;
+	                    		break;
 	                		case 20:
 	                		    tagValue = "2000";
+	                		    tagBgCellColor = "orange"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
 	                		    break;
 	                		case 30:
 	                		    tagValue = "1000";
+	                		    tagBgCellColor = "orange"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
 	                		    break;
 	                		  default:
@@ -79,12 +110,6 @@
                     		mytable += '<td rowspan="40" style="width:50%; text-align:center; vertical-align:center; height:' + cellHeight + '; color:orange; background-color:' + defaultBgCellColor + ' font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 80px;">' + consumo + ' W</td>';
                     		
                 		}
-                		/*
-                   		if(i == 21){
-                    		mytable += '<td rowspan="20" style="width:50%; text-align:center; vertical-align:top; height:' + cellHeight + '; color:white; background-color:' + defaultBgCellColor + ' font-family: Arial, Helvetica, sans-serif; font-weight: bold;font-size: 80px;">KWH</td>';
-                    		
-                		}
-                		*/
                 		mytable += '</tr>';
                 	}
                 	 
@@ -95,7 +120,8 @@
                     // alert(this.responseText);
                  }
             };
-            xhttp.open("GET", "https://192.168.1.12:8443/ftvRESTful/getLastFtvData", true);
+            xhttp.open("GET", "https://192.168.1.12:8443/ftvRESTful/getLastFtvData", true);  //prod
+            //xhttp.open("GET", "http://192.168.1.57:8080/ftvRESTful/getLastFtvData", true);   //tes
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
             xhttp.send();
