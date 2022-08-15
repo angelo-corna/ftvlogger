@@ -14,7 +14,7 @@ public class SendTelegramNotification {
 	 public static void main(String[] args) throws Exception {  
  
 		//get arguments
-		if (args.length != 1){
+		if (args.length != 2){
 			System.out.println("usage SendTelegramNotification cfgfile message");
 			System.exit(1);
 		}
