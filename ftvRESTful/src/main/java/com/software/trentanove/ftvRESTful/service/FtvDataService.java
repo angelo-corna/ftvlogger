@@ -14,4 +14,6 @@ public interface FtvDataService {
 	public void deleteFtvData(FtvData ftvData);
 	 
 	public FtvData getLastFtvData();
+	
+	public FtvData getDaylyFtvData();
 }

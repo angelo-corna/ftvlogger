@@ -15,4 +15,6 @@ public interface FtvDataDao {
 		 
 	 public FtvData getLastFtvData();
 	 
+	 public FtvData getDaylyFtvData();
+	 
 }

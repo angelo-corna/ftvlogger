@@ -37,5 +37,9 @@ public class FtvDataServiceImpl implements FtvDataService {
 	 public FtvData getLastFtvData() {
 		 return ftvDataDao.getLastFtvData();
 	 }
+	 
+	 public FtvData getDaylyFtvData() {
+		 return ftvDataDao.getDaylyFtvData();
+	 }
 
 }

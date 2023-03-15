@@ -3,6 +3,7 @@ package com.software.trentanove.ftvRESTful.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.software.trentanove.ftvRESTful.model.FtvData;
 
 @Repository
-public class FtvDataDaoImpl implements FtvDataDao {
+public abstract class FtvDataDaoImpl implements FtvDataDao {
  
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
  
@@ -92,6 +93,13 @@ public class FtvDataDaoImpl implements FtvDataDao {
 	public FtvData getLastFtvData() {
 		String sql = "select * from rs485data ORDER BY date DESC LIMIT 1;";
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(null), new FtvDataMapper());
+	}
+	
+	public List<FtvData> getDaylyFtvData(Date daylyDate) {
+		List<FtvData> list = new ArrayList<FtvData>();
+		String sql = "select ftv_power,ftv_energy,con_power,con_energy from rs485data where date > CURDATE() ORDER BY date;";
+		list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new FtvDataMapper());
+		return list;
 	}
 
 }

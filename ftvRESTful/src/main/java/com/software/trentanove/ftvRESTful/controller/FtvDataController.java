@@ -59,4 +59,13 @@ public class FtvDataController {
 		}
 		return new ResponseEntity<FtvData>(last, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/ftvDaylyData", method = RequestMethod.GET, headers="Accept=application/json")
+	public ResponseEntity<List<FtvData>> listDaylyFtvData(){
+		List<FtvData> list = (List<FtvData>) ftvDataService.getDaylyFtvData();
+		if(list.size() == 0){
+			return new ResponseEntity<List<FtvData>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<FtvData>>(list, HttpStatus.OK);
+	}
 }
