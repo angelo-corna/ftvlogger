@@ -1,0 +1,23 @@
+pipeline { 
+    agent any  
+    environment {
+        def mvn = "/home/pi/apache-maven/bin/mvn"
+    }
+    stages { 
+        stage(' Compile') { 
+            steps { 
+            	dir("ftvSpringRest"){
+					sh '${mvn} clean install'
+ 				}
+            }
+        }
+        stage('Deploy to Tomcat'){
+			steps{
+            	dir("ftvSpringRest"){
+	            	sh '${mvn} tomcat7:redeploy -Dhostname=ftvlogger -Dport=8080 -DserverName=ftvTomcatServer'   
+	            } 
+			}
+        }
+    }
+    
+}
