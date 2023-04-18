@@ -1,7 +1,9 @@
 package com.software.trentanove.ftvRESTful.dao;
 
 import java.util.List;
+
 import com.software.trentanove.ftvRESTful.model.FtvData;
+
 
 public interface FtvDataDao {
 	 
@@ -15,6 +17,6 @@ public interface FtvDataDao {
 		 
 	 public FtvData getLastFtvData();
 	 
-	 public FtvData getDaylyFtvData();
-	 
+	 //public FtvData getDaylyFtvData();
+
 }

@@ -3,7 +3,6 @@ package com.software.trentanove.ftvRESTful.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,14 @@ import com.software.trentanove.ftvRESTful.model.FtvData;
 
 @Repository
 public abstract class FtvDataDaoImpl implements FtvDataDao {
- 
+	
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
  
 	@Autowired
 	public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
-
+	
 	private static final class FtvDataMapper implements RowMapper<FtvData>{
 		public FtvData mapRow(ResultSet rs, int rowNum) throws SQLException {
 			FtvData ftvData = new FtvData();
@@ -95,11 +94,13 @@ public abstract class FtvDataDaoImpl implements FtvDataDao {
 		return namedParameterJdbcTemplate.queryForObject(sql, getSqlParameterByModel(null), new FtvDataMapper());
 	}
 	
+	/*
 	public List<FtvData> getDaylyFtvData(Date daylyDate) {
 		List<FtvData> list = new ArrayList<FtvData>();
 		String sql = "select ftv_power,ftv_energy,con_power,con_energy from rs485data where date > CURDATE() ORDER BY date;";
 		list = namedParameterJdbcTemplate.query(sql, getSqlParameterByModel(null), new FtvDataMapper());
 		return list;
 	}
+	*/
 
 }

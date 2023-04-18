@@ -10,13 +10,14 @@ import com.software.trentanove.ftvRESTful.model.FtvData;
 
 @Service
 public class FtvDataServiceImpl implements FtvDataService {
-	 
+
 	 FtvDataDao ftvDataDao;
 	 
 	 @Autowired
 	 public void setFtvDataDao(FtvDataDao ftvDataDao) {
-		this.ftvDataDao = ftvDataDao;
+    	this.ftvDataDao = ftvDataDao;
 	 }
+
 
 	 public List<FtvData> listAllFtvData() {
 		return ftvDataDao.listAllFtvData();
@@ -38,8 +39,10 @@ public class FtvDataServiceImpl implements FtvDataService {
 		 return ftvDataDao.getLastFtvData();
 	 }
 	 
+	 /*
 	 public FtvData getDaylyFtvData() {
 		 return ftvDataDao.getDaylyFtvData();
 	 }
+	 */
 
 }

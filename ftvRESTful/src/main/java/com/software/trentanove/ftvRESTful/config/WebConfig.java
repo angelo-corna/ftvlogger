@@ -12,6 +12,7 @@ import org.springframework.jndi.JndiTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.software.trentanove.ftvRESTful" })
@@ -24,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
 	public NamedParameterJdbcTemplate geNamedParameterJdbcTemplate(){
 		return new NamedParameterJdbcTemplate(dataSource);
 	}
-	 
+	
 	@Bean
 	public DataSource getDataSource() throws NamingException{
 		JndiTemplate jndiTemplate = new JndiTemplate();

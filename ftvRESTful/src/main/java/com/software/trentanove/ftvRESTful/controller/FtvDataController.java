@@ -14,6 +14,7 @@ import com.software.trentanove.ftvRESTful.service.FtvDataService;
 
 @RestController
 public class FtvDataController {
+	
 	@Autowired
 	FtvDataService ftvDataService;
 	 
@@ -60,6 +61,7 @@ public class FtvDataController {
 		return new ResponseEntity<FtvData>(last, HttpStatus.OK);
 	}
 	
+	/*
 	@RequestMapping(value="/ftvDaylyData", method = RequestMethod.GET, headers="Accept=application/json")
 	public ResponseEntity<List<FtvData>> listDaylyFtvData(){
 		List<FtvData> list = (List<FtvData>) ftvDataService.getDaylyFtvData();
@@ -68,4 +70,5 @@ public class FtvDataController {
 		}
 		return new ResponseEntity<List<FtvData>>(list, HttpStatus.OK);
 	}
+	*/
 }

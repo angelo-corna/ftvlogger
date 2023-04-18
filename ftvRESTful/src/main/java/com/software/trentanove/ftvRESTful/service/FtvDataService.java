@@ -4,7 +4,7 @@ import java.util.List;
 import com.software.trentanove.ftvRESTful.model.FtvData;
 
 public interface FtvDataService {
-
+	
 	public List<FtvData> listAllFtvData();
  
 	public void addFtvData(FtvData ftvData);
@@ -15,5 +15,5 @@ public interface FtvDataService {
 	 
 	public FtvData getLastFtvData();
 	
-	public FtvData getDaylyFtvData();
+	//public FtvData getDaylyFtvData();
 }
