@@ -48,14 +48,14 @@
                 	readDateString = day + "-" + month + "-" + year + " " + hour + ":" + minute+ ":" + second;
                 	
                 	var barBgCellColor = "green";
-                	if (consumo > 1000 && consumo <= 2000){
+                	if (consumo > 2000 && consumo <= 4000){
                 		barBgCellColor = "yellow";
                 	}
-                	if (consumo > 2000){
+                	if (consumo > 4000){
                 		barBgCellColor = "red";
                 	}
                 	
-                	var barNums = (Math.floor(myObj.con_power/200) + 1) * 2;
+                	var barNums = (Math.floor(myObj.con_power/400) + 1) * 2;
                 	                	
                 	var defaultBgCellColor = "#323228";
                 	var EmptyBgCellColor = "#5A5A5A"
@@ -85,17 +85,17 @@
                 		var rowValue = "";
                 		switch (i) {
 	                		case 10:
-	                		    tagValue = "3000";
+	                		    tagValue = "6000";
 	                		    tagBgCellColor = "red"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
 	                    		break;
 	                		case 20:
-	                		    tagValue = "2000";
+	                		    tagValue = "4000";
 	                		    tagBgCellColor = "orange"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
 	                		    break;
 	                		case 30:
-	                		    tagValue = "1000";
+	                		    tagValue = "2000";
 	                		    tagBgCellColor = "orange"
 	                    		var rowValue = '<hr size="1" width="100%" color="' + tagBgCellColor + '">';
 	                		    break;
@@ -122,8 +122,8 @@
                     // alert(this.responseText);
                  }
             };
-            xhttp.open("GET", "https://39sw.ddns.net:8443/ftvRESTful/getLastFtvData", true);  //prod
-            //xhttp.open("GET", "http://192.168.1.57:8080/ftvRESTful/getLastFtvData", true);   //tes
+            xhttp.open("GET", "https://39sw.ddns.net:8443/ftvSpringRest/lastFtvData", true);  //prod
+            //xhttp.open("GET", "http://localhost:8080/ftvSpringRest/lastFtvData", true);   //tes
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
             xhttp.send();
