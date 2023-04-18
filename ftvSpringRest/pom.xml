@@ -93,7 +93,7 @@
 					<configuration>
 						<url>http://${hostname}:${port}/manager/text</url>
 						<server>${serverName}</server>
-						<path>/ftvRESTful</path>
+						<path>/ftvSpringRest</path>
 					</configuration>
 				</plugin>
 			</plugins>
