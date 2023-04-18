@@ -26,7 +26,6 @@ public class CheckFTV {
 		String encryptedPwd = prop.getProperty("db_password");
 		String keyS = prop.getProperty("key");
         String decryptedPwd =  DecryptPwd.getDecryptedPwd(encryptedPwd, keyS);
-		 
         
 		//check last data
         Connection conn = null;
@@ -51,18 +50,24 @@ public class CheckFTV {
 		    Date actualDate = new Date();
 
 		    if((actualDate.getTime() - dLastDate.getTime()) > 300000){
-		    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", "Last insert date: "+lastDate, "FTV Logger - Data Collection Error"};
-		    	SendMail.main(mailArgs);;
+		    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", "Last insert date: "+lastDate, "FTV Logger - Data Collection Error"};
+		    	//SendMail.main(mailArgs);
+		    	String[] telegramArgs = { cfgFile, "FTV Logger - Data Collection Error\nLast insert date: "+lastDate };
+		    	SendTelegramNotification.main(telegramArgs);
 		    }
 		}catch(SQLException se){
 			//Handle errors for JDBC
-	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", se.toString(), "FTV Logger - Error detected during SQL Statement submission"};
-	    	SendMail.main(mailArgs);
+	    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", se.toString(), "FTV Logger - Error detected during SQL Statement submission"};
+	    	//SendMail.main(mailArgs);
+	    	String[] telegramArgs = { cfgFile, "FTV Logger - Error detected during SQL Statement submission\n" + se.toString() };
+	    	SendTelegramNotification.main(telegramArgs);
 			//se.printStackTrace();
 		}catch(Exception e){
 			//Handle errors for Class.forName
-	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", e.toString(), "FTV Logger - Error detected during check execution"};
-	    	SendMail.main(mailArgs);
+	    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", e.toString(), "FTV Logger - Error detected during check execution"};
+	    	//SendMail.main(mailArgs);
+	    	String[] telegramArgs = { cfgFile, "FTV Logger - Error detected during check execution\n" + e.toString() };
+	    	SendTelegramNotification.main(telegramArgs);
 		    //e.printStackTrace();
 		}finally{
 			//finally block used to close resources

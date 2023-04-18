@@ -46,8 +46,10 @@ public class CheckNULLs {
 		    	String chkDate  = rs.getString("mydate"); 
 			    System.out.println("\t"+chkDate+" - FTV #NULLs: "+numNulls);
 			    if(numNulls > threashold){
-			    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - FTV #NULLs Threashold Excideed"};
-			    	SendMail.main(mailArgs);;
+			    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - FTV #NULLs Threashold Excideed"};
+			    	//SendMail.main(mailArgs);
+			    	String[] telegramArgs = { cfgFile, "FTV Logger - FTV #NULLs Threashold Excideed\n" + chkDate+" - "+numNulls };
+			    	SendTelegramNotification.main(telegramArgs);
 			    }
 		    }else{
 		    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -65,8 +67,10 @@ public class CheckNULLs {
 		    	String chkDate  = rs.getString("mydate"); 
 			    System.out.println("\t"+chkDate+" - CON #NULLs: "+numNulls);
 			    if(numNulls > threashold){
-			    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - CON #NULLs Threashold Excideed"};
-			    	SendMail.main(mailArgs);;
+			    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", chkDate+" - "+numNulls, "FTV Logger - CON #NULLs Threashold Excideed"};
+			    	//SendMail.main(mailArgs);
+			    	String[] telegramArgs = { cfgFile, "FTV Logger - CON #NULLs Threashold Excideed\n" + chkDate+" - "+numNulls };
+			    	SendTelegramNotification.main(telegramArgs);
 			    }
 		    }else{
 		    	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -81,13 +85,17 @@ public class CheckNULLs {
 		
 		}catch(SQLException se){
 			//Handle errors for JDBC
-	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", se.toString(), "FTV Logger - Error detected during SQL Statement submission"};
-	    	SendMail.main(mailArgs);
+	    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", se.toString(), "FTV Logger - Error detected during SQL Statement submission"};
+	    	//SendMail.main(mailArgs);
+	    	String[] telegramArgs = { cfgFile, "FTV Logger - Error detected during SQL Statement submission\n" + se.toString() };
+	    	SendTelegramNotification.main(telegramArgs);
 			//se.printStackTrace();
 		}catch(Exception e){
 			//Handle errors for Class.forName
-	    	String[] mailArgs = {cfgFile,"cornangelo@gmail.com", e.toString(), "FTV Logger - Error detected during check execution"};
-	    	SendMail.main(mailArgs);
+	    	//String[] mailArgs = {cfgFile,"cornangelo@gmail.com", e.toString(), "FTV Logger - Error detected during check execution"};
+	    	//SendMail.main(mailArgs);
+	    	String[] telegramArgs = { cfgFile, "FTV Logger - Error detected during check execution\n" + e.toString() };
+	    	SendTelegramNotification.main(telegramArgs);
 		    //e.printStackTrace();
 		}finally{
 			//finally block used to close resources
